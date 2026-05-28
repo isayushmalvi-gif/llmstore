@@ -1,0 +1,690 @@
+[
+  {
+    "id": "llama3.2-3b",
+    "name": "Llama 3.2 3B",
+    "provider": "Meta",
+    "category": "LLM",
+    "description": "Meta's latest compact language model. Great for general conversation, summarization and reasoning tasks.",
+    "size_gb": 2.0,
+    "min_ram_gb": 8,
+    "min_vram_gb": 4,
+    "recommended_vram_gb": 6,
+    "parameters": "3B",
+    "quantization": [
+      "Q4_K_M",
+      "Q8_0",
+      "F16"
+    ],
+    "ollama_id": "llama3.2:3b",
+    "tags": [
+      "chat",
+      "fast",
+      "efficient",
+      "beginner-friendly"
+    ],
+    "license": "Llama 3.2",
+    "commercial_use": true,
+    "benchmark_score": 72,
+    "context_length": 131072,
+    "language": [
+      "English",
+      "Multilingual"
+    ],
+    "use_cases": [
+      "Chatbot",
+      "Summarization",
+      "Q&A"
+    ],
+    "featured": true
+  },
+  {
+    "id": "llama3.1-8b",
+    "name": "Llama 3.1 8B",
+    "provider": "Meta",
+    "category": "LLM",
+    "description": "Meta's powerful 8B model with 128K context window. Excellent balance of performance and efficiency.",
+    "size_gb": 4.7,
+    "min_ram_gb": 8,
+    "min_vram_gb": 6,
+    "recommended_vram_gb": 8,
+    "parameters": "8B",
+    "quantization": [
+      "Q4_K_M",
+      "Q5_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "llama3.1:8b",
+    "tags": [
+      "chat",
+      "powerful",
+      "popular",
+      "recommended"
+    ],
+    "license": "Llama 3.1",
+    "commercial_use": true,
+    "benchmark_score": 82,
+    "context_length": 131072,
+    "language": [
+      "English",
+      "Multilingual"
+    ],
+    "use_cases": [
+      "Chatbot",
+      "Analysis",
+      "Writing",
+      "Code"
+    ],
+    "featured": true
+  },
+  {
+    "id": "llama3.1-70b",
+    "name": "Llama 3.1 70B",
+    "provider": "Meta",
+    "category": "LLM",
+    "description": "Meta's flagship 70B model. Near GPT-4 level performance for complex reasoning and analysis.",
+    "size_gb": 40.0,
+    "min_ram_gb": 64,
+    "min_vram_gb": 40,
+    "recommended_vram_gb": 48,
+    "parameters": "70B",
+    "quantization": [
+      "Q4_K_M",
+      "Q5_K_M"
+    ],
+    "ollama_id": "llama3.1:70b",
+    "tags": [
+      "powerful",
+      "enterprise",
+      "high-end"
+    ],
+    "license": "Llama 3.1",
+    "commercial_use": true,
+    "benchmark_score": 92,
+    "context_length": 131072,
+    "language": [
+      "English",
+      "Multilingual"
+    ],
+    "use_cases": [
+      "Complex Analysis",
+      "Research",
+      "Enterprise"
+    ],
+    "featured": false
+  },
+  {
+    "id": "mistral-7b",
+    "name": "Mistral 7B",
+    "provider": "Mistral AI",
+    "category": "LLM",
+    "description": "Highly efficient 7B model that outperforms larger models. Great for production deployments.",
+    "size_gb": 4.1,
+    "min_ram_gb": 8,
+    "min_vram_gb": 6,
+    "recommended_vram_gb": 8,
+    "parameters": "7B",
+    "quantization": [
+      "Q4_K_M",
+      "Q5_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "mistral:7b",
+    "tags": [
+      "efficient",
+      "fast",
+      "popular",
+      "production-ready"
+    ],
+    "license": "Apache 2.0",
+    "commercial_use": true,
+    "benchmark_score": 80,
+    "context_length": 32768,
+    "language": [
+      "English",
+      "French",
+      "German"
+    ],
+    "use_cases": [
+      "Chatbot",
+      "Summarization",
+      "Classification"
+    ],
+    "featured": true
+  },
+  {
+    "id": "mixtral-8x7b",
+    "name": "Mixtral 8x7B",
+    "provider": "Mistral AI",
+    "category": "LLM",
+    "description": "Mixture of experts model with exceptional performance. Best-in-class for its resource usage.",
+    "size_gb": 26.0,
+    "min_ram_gb": 32,
+    "min_vram_gb": 24,
+    "recommended_vram_gb": 32,
+    "parameters": "47B (8x7B MoE)",
+    "quantization": [
+      "Q4_K_M",
+      "Q5_K_M"
+    ],
+    "ollama_id": "mixtral:8x7b",
+    "tags": [
+      "powerful",
+      "MoE",
+      "enterprise"
+    ],
+    "license": "Apache 2.0",
+    "commercial_use": true,
+    "benchmark_score": 89,
+    "context_length": 32768,
+    "language": [
+      "English",
+      "French",
+      "German",
+      "Spanish"
+    ],
+    "use_cases": [
+      "Complex Tasks",
+      "Multilingual",
+      "Enterprise"
+    ],
+    "featured": false
+  },
+  {
+    "id": "phi3-mini",
+    "name": "Phi-3 Mini",
+    "provider": "Microsoft",
+    "category": "LLM",
+    "description": "Microsoft's compact but mighty model. Surprisingly powerful for its tiny size. Perfect for CPU-only setups.",
+    "size_gb": 2.3,
+    "min_ram_gb": 4,
+    "min_vram_gb": 0,
+    "recommended_vram_gb": 4,
+    "parameters": "3.8B",
+    "quantization": [
+      "Q4_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "phi3:mini",
+    "tags": [
+      "tiny",
+      "cpu-friendly",
+      "fast",
+      "beginner-friendly"
+    ],
+    "license": "MIT",
+    "commercial_use": true,
+    "benchmark_score": 70,
+    "context_length": 128000,
+    "language": [
+      "English"
+    ],
+    "use_cases": [
+      "Edge Deployment",
+      "Quick Tasks",
+      "CPU Inference"
+    ],
+    "featured": true
+  },
+  {
+    "id": "phi3-medium",
+    "name": "Phi-3 Medium",
+    "provider": "Microsoft",
+    "category": "LLM",
+    "description": "Microsoft's medium-sized model with excellent reasoning capabilities.",
+    "size_gb": 8.5,
+    "min_ram_gb": 16,
+    "min_vram_gb": 8,
+    "recommended_vram_gb": 12,
+    "parameters": "14B",
+    "quantization": [
+      "Q4_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "phi3:medium",
+    "tags": [
+      "reasoning",
+      "microsoft",
+      "efficient"
+    ],
+    "license": "MIT",
+    "commercial_use": true,
+    "benchmark_score": 83,
+    "context_length": 128000,
+    "language": [
+      "English"
+    ],
+    "use_cases": [
+      "Reasoning",
+      "Analysis",
+      "Code"
+    ],
+    "featured": false
+  },
+  {
+    "id": "gemma2-2b",
+    "name": "Gemma 2 2B",
+    "provider": "Google",
+    "category": "LLM",
+    "description": "Google's compact Gemma 2 model. Excellent performance for its size with strong safety features.",
+    "size_gb": 1.6,
+    "min_ram_gb": 4,
+    "min_vram_gb": 0,
+    "recommended_vram_gb": 4,
+    "parameters": "2B",
+    "quantization": [
+      "Q4_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "gemma2:2b",
+    "tags": [
+      "tiny",
+      "google",
+      "safe",
+      "cpu-friendly"
+    ],
+    "license": "Gemma",
+    "commercial_use": true,
+    "benchmark_score": 65,
+    "context_length": 8192,
+    "language": [
+      "English",
+      "Multilingual"
+    ],
+    "use_cases": [
+      "Quick Tasks",
+      "Safe AI",
+      "Edge"
+    ],
+    "featured": false
+  },
+  {
+    "id": "gemma2-9b",
+    "name": "Gemma 2 9B",
+    "provider": "Google",
+    "category": "LLM",
+    "description": "Google's powerful Gemma 2 9B model with state-of-the-art performance for its size.",
+    "size_gb": 5.5,
+    "min_ram_gb": 8,
+    "min_vram_gb": 6,
+    "recommended_vram_gb": 8,
+    "parameters": "9B",
+    "quantization": [
+      "Q4_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "gemma2:9b",
+    "tags": [
+      "google",
+      "powerful",
+      "recommended"
+    ],
+    "license": "Gemma",
+    "commercial_use": true,
+    "benchmark_score": 84,
+    "context_length": 8192,
+    "language": [
+      "English",
+      "Multilingual"
+    ],
+    "use_cases": [
+      "Chatbot",
+      "Analysis",
+      "Writing"
+    ],
+    "featured": true
+  },
+  {
+    "id": "qwen2.5-7b",
+    "name": "Qwen 2.5 7B",
+    "provider": "Alibaba",
+    "category": "LLM",
+    "description": "Alibaba's latest Qwen model with excellent multilingual and coding capabilities.",
+    "size_gb": 4.4,
+    "min_ram_gb": 8,
+    "min_vram_gb": 6,
+    "recommended_vram_gb": 8,
+    "parameters": "7B",
+    "quantization": [
+      "Q4_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "qwen2.5:7b",
+    "tags": [
+      "multilingual",
+      "coding",
+      "alibaba"
+    ],
+    "license": "Apache 2.0",
+    "commercial_use": true,
+    "benchmark_score": 81,
+    "context_length": 32768,
+    "language": [
+      "English",
+      "Chinese",
+      "Multilingual"
+    ],
+    "use_cases": [
+      "Multilingual",
+      "Code",
+      "Analysis"
+    ],
+    "featured": false
+  },
+  {
+    "id": "codellama-7b",
+    "name": "CodeLlama 7B",
+    "provider": "Meta",
+    "category": "Code",
+    "description": "Meta's specialized coding model. Excellent for code generation, completion and explanation.",
+    "size_gb": 3.8,
+    "min_ram_gb": 8,
+    "min_vram_gb": 6,
+    "recommended_vram_gb": 8,
+    "parameters": "7B",
+    "quantization": [
+      "Q4_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "codellama:7b",
+    "tags": [
+      "code",
+      "programming",
+      "popular"
+    ],
+    "license": "Llama 2",
+    "commercial_use": true,
+    "benchmark_score": 78,
+    "context_length": 16384,
+    "language": [
+      "Code",
+      "English"
+    ],
+    "use_cases": [
+      "Code Generation",
+      "Code Review",
+      "Debugging"
+    ],
+    "featured": true
+  },
+  {
+    "id": "deepseek-coder-6.7b",
+    "name": "DeepSeek Coder 6.7B",
+    "provider": "DeepSeek",
+    "category": "Code",
+    "description": "State-of-the-art coding model trained on 2T tokens of code. Beats GPT-3.5 on coding tasks.",
+    "size_gb": 3.8,
+    "min_ram_gb": 8,
+    "min_vram_gb": 6,
+    "recommended_vram_gb": 8,
+    "parameters": "6.7B",
+    "quantization": [
+      "Q4_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "deepseek-coder:6.7b",
+    "tags": [
+      "code",
+      "best-in-class",
+      "recommended"
+    ],
+    "license": "DeepSeek",
+    "commercial_use": true,
+    "benchmark_score": 85,
+    "context_length": 16384,
+    "language": [
+      "Code",
+      "English",
+      "Chinese"
+    ],
+    "use_cases": [
+      "Code Generation",
+      "Bug Fix",
+      "Code Review"
+    ],
+    "featured": true
+  },
+  {
+    "id": "starcoder2-7b",
+    "name": "StarCoder2 7B",
+    "provider": "BigCode",
+    "category": "Code",
+    "description": "Open-source coding model trained on The Stack v2. Supports 600+ programming languages.",
+    "size_gb": 4.0,
+    "min_ram_gb": 8,
+    "min_vram_gb": 6,
+    "recommended_vram_gb": 8,
+    "parameters": "7B",
+    "quantization": [
+      "Q4_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "starcoder2:7b",
+    "tags": [
+      "code",
+      "multilanguage",
+      "open-source"
+    ],
+    "license": "BigCode OpenRAIL-M",
+    "commercial_use": true,
+    "benchmark_score": 76,
+    "context_length": 16384,
+    "language": [
+      "600+ Programming Languages"
+    ],
+    "use_cases": [
+      "Code Completion",
+      "Code Generation"
+    ],
+    "featured": false
+  },
+  {
+    "id": "llava-7b",
+    "name": "LLaVA 7B",
+    "provider": "LLaVA Team",
+    "category": "Vision",
+    "description": "Large Language and Vision Assistant. Understands and reasons about images with text.",
+    "size_gb": 4.5,
+    "min_ram_gb": 8,
+    "min_vram_gb": 6,
+    "recommended_vram_gb": 8,
+    "parameters": "7B",
+    "quantization": [
+      "Q4_K_M",
+      "Q8_0"
+    ],
+    "ollama_id": "llava:7b",
+    "tags": [
+      "vision",
+      "multimodal",
+      "images"
+    ],
+    "license": "LLaVA",
+    "commercial_use": false,
+    "benchmark_score": 75,
+    "context_length": 4096,
+    "language": [
+      "English"
+    ],
+    "use_cases": [
+      "Image Analysis",
+      "Visual Q&A",
+      "OCR"
+    ],
+    "featured": true
+  },
+  {
+    "id": "moondream2",
+    "name": "Moondream 2",
+    "provider": "Vikhyat",
+    "category": "Vision",
+    "description": "Tiny but powerful vision model. Runs efficiently on CPU. Great for image description.",
+    "size_gb": 1.7,
+    "min_ram_gb": 4,
+    "min_vram_gb": 0,
+    "recommended_vram_gb": 4,
+    "parameters": "1.8B",
+    "quantization": [
+      "Q4_K_M"
+    ],
+    "ollama_id": "moondream:latest",
+    "tags": [
+      "vision",
+      "tiny",
+      "cpu-friendly",
+      "fast"
+    ],
+    "license": "Apache 2.0",
+    "commercial_use": true,
+    "benchmark_score": 62,
+    "context_length": 2048,
+    "language": [
+      "English"
+    ],
+    "use_cases": [
+      "Image Description",
+      "Visual Q&A"
+    ],
+    "featured": false
+  },
+  {
+    "id": "whisper-base",
+    "name": "Whisper Base",
+    "provider": "OpenAI",
+    "category": "Speech",
+    "description": "OpenAI's speech recognition model. Transcribes audio to text in 99 languages.",
+    "size_gb": 0.14,
+    "min_ram_gb": 2,
+    "min_vram_gb": 0,
+    "recommended_vram_gb": 2,
+    "parameters": "74M",
+    "quantization": [
+      "F16",
+      "F32"
+    ],
+    "ollama_id": "whisper:base",
+    "tags": [
+      "speech",
+      "transcription",
+      "tiny",
+      "cpu-friendly"
+    ],
+    "license": "MIT",
+    "commercial_use": true,
+    "benchmark_score": 70,
+    "context_length": 0,
+    "language": [
+      "99 Languages"
+    ],
+    "use_cases": [
+      "Transcription",
+      "Translation",
+      "Subtitles"
+    ],
+    "featured": true
+  },
+  {
+    "id": "whisper-large",
+    "name": "Whisper Large V3",
+    "provider": "OpenAI",
+    "category": "Speech",
+    "description": "OpenAI's most accurate speech model. Best-in-class transcription accuracy.",
+    "size_gb": 3.1,
+    "min_ram_gb": 8,
+    "min_vram_gb": 4,
+    "recommended_vram_gb": 8,
+    "parameters": "1.5B",
+    "quantization": [
+      "F16"
+    ],
+    "ollama_id": "whisper:large-v3",
+    "tags": [
+      "speech",
+      "accurate",
+      "professional"
+    ],
+    "license": "MIT",
+    "commercial_use": true,
+    "benchmark_score": 92,
+    "context_length": 0,
+    "language": [
+      "99 Languages"
+    ],
+    "use_cases": [
+      "Professional Transcription",
+      "Broadcast",
+      "Medical"
+    ],
+    "featured": false
+  },
+  {
+    "id": "nomic-embed-text",
+    "name": "Nomic Embed Text",
+    "provider": "Nomic AI",
+    "category": "Embedding",
+    "description": "High performance text embeddings model. Perfect for RAG applications and semantic search.",
+    "size_gb": 0.27,
+    "min_ram_gb": 2,
+    "min_vram_gb": 0,
+    "recommended_vram_gb": 2,
+    "parameters": "137M",
+    "quantization": [
+      "F16"
+    ],
+    "ollama_id": "nomic-embed-text:latest",
+    "tags": [
+      "embedding",
+      "RAG",
+      "search",
+      "tiny"
+    ],
+    "license": "Apache 2.0",
+    "commercial_use": true,
+    "benchmark_score": 85,
+    "context_length": 8192,
+    "language": [
+      "English",
+      "Multilingual"
+    ],
+    "use_cases": [
+      "RAG",
+      "Semantic Search",
+      "Clustering"
+    ],
+    "featured": true
+  },
+  {
+    "id": "mxbai-embed-large",
+    "name": "MxBai Embed Large",
+    "provider": "MixedBread",
+    "category": "Embedding",
+    "description": "State-of-the-art embedding model. Outperforms OpenAI ada-002 on MTEB benchmark.",
+    "size_gb": 0.67,
+    "min_ram_gb": 4,
+    "min_vram_gb": 0,
+    "recommended_vram_gb": 2,
+    "parameters": "335M",
+    "quantization": [
+      "F16"
+    ],
+    "ollama_id": "mxbai-embed-large:latest",
+    "tags": [
+      "embedding",
+      "best-in-class",
+      "RAG"
+    ],
+    "license": "Apache 2.0",
+    "commercial_use": true,
+    "benchmark_score": 90,
+    "context_length": 512,
+    "language": [
+      "English",
+      "Multilingual"
+    ],
+    "use_cases": [
+      "RAG",
+      "Semantic Search",
+      "Similarity"
+    ],
+    "featured": false
+  }
+]
