@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLMStore - Enterprise AI Deployment Platform</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e8f0; line-height: 1.6; }
+  .hero { background: linear-gradient(135deg, #1a0533 0%, #0f0f1a 50%, #001a33 100%); padding: 80px 20px; text-align: center; border-bottom: 1px solid #2d2d4e; }
+  .hero h1 { font-size: 3.5rem; font-weight: 800; background: linear-gradient(135deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+  .hero h2 { font-size: 1.3rem; color: #94a3b8; font-weight: 400; margin-bottom: 30px; }
+  .hero p { font-size: 1.1rem; color: #cbd5e1; max-width: 600px; margin: 0 auto 40px; }
+  .badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+  .badge { padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+  .badge-purple { background: #4c1d95; color: #c4b5fd; border: 1px solid #6d28d9; }
+  .badge-blue { background: #1e3a5f; color: #93c5fd; border: 1px solid #2563eb; }
+  .badge-green { background: #14532d; color: #86efac; border: 1px solid #16a34a; }
+  .badge-red { background: #7f1d1d; color: #fca5a5; border: 1px solid #dc2626; }
+  .btn { display: inline-block; padding: 14px 32px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 1rem; margin: 8px; transition: all 0.2s; }
+  .btn-primary { background: #7c3aed; color: white; }
+  .btn-primary:hover { background: #6d28d9; transform: translateY(-2px); }
+  .btn-secondary { background: transparent; color: #a78bfa; border: 2px solid #7c3aed; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+  .section { margin-bottom: 80px; }
+  .section-title { font-size: 2rem; font-weight: 700; color: white; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+  .section-subtitle { color: #64748b; margin-bottom: 40px; font-size: 1.05rem; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 28px; transition: all 0.3s; }
+  .card:hover { border-color: #7c3aed; transform: translateY(-4px); }
+  .card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px; }
+  .card h3 { font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 10px; }
+  .card p { color: #94a3b8; font-size: 0.9rem; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th { background: #1f2937; color: #a78bfa; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 0.9rem; }
+  td { padding: 12px 16px; border-bottom: 1px solid #1f2937; color: #cbd5e1; font-size: 0.9rem; }
+  tr:hover td { background: #111827; }
+  .code-block { background: #0d1117; border: 1px solid #1f2937; border-radius: 12px; overflow: hidden; margin: 20px 0; }
+  .code-header { background: #161b22; padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #1f2937; }
+  .code-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .code-label { color: #6b7280; font-size: 0.8rem; margin-left: 8px; }
+  pre { padding: 20px; overflow-x: auto; font-size: 0.85rem; line-height: 1.7; }
+  code { font-family: 'Fira Code', 'Courier New', monospace; color: #e2e8f0; }
+  .highlight { color: #a78bfa; }
+  .highlight-green { color: #86efac; }
+  .highlight-blue { color: #93c5fd; }
+  .highlight-yellow { color: #fcd34d; }
+  .step { display: flex; gap: 20px; margin-bottom: 32px; align-items: flex-start; }
+  .step-number { width: 36px; height: 36px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; flex-shrink: 0; }
+  .step-content h4 { color: white; font-weight: 600; margin-bottom: 6px; }
+  .step-content p { color: #94a3b8; font-size: 0.9rem; }
+  .tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin: 3px; }
+  .tag-purple { background: #4c1d95; color: #c4b5fd; }
+  .tag-blue { background: #1e3a5f; color: #93c5fd; }
+  .tag-green { background: #14532d; color: #86efac; }
+  .arch-box { background: #0d1117; border: 1px solid #1f2937; border-radius: 16px; padding: 32px; font-family: monospace; color: #94a3b8; line-height: 2; font-size: 0.9rem; }
+  .arch-box .green { color: #86efac; }
+  .arch-box .purple { color: #c4b5fd; }
+  .arch-box .blue { color: #93c5fd; }
+  .arch-box .yellow { color: #fcd34d; }
+  .pricing-card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 32px; text-align: center; transition: all 0.3s; }
+  .pricing-card:hover { border-color: #7c3aed; transform: translateY(-4px); }
+  .pricing-card.featured { border-color: #7c3aed; background: linear-gradient(135deg, #1a0533, #111827); }
+  .pricing-card .plan { color: #94a3b8; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .pricing-card .price { font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 8px; }
+  .pricing-card .price span { font-size: 1rem; color: #64748b; font-weight: 400; }
+  .pricing-card ul { list-style: none; margin: 20px 0; text-align: left; }
+  .pricing-card ul li { padding: 8px 0; color: #94a3b8; font-size: 0.9rem; border-bottom: 1px solid #1f2937; }
+  .pricing-card ul li::before { content: "✓ "; color: #86efac; font-weight: 700; }
+  .roadmap-item { display: flex; gap: 16px; margin-bottom: 16px; align-items: center; }
+  .roadmap-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .dot-done { background: #86efac; }
+  .dot-soon { background: #fcd34d; }
+  .dot-future { background: #6b7280; }
+  .roadmap-text { color: #94a3b8; font-size: 0.9rem; }
+  .roadmap-text.done { color: #86efac; text-decoration: line-through; opacity: 0.7; }
+  .stat-card { background: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 24px; text-align: center; }
+  .stat-card .number { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-card .label { color: #64748b; font-size: 0.85rem; margin-top: 4px; }
+  footer { background: #080810; border-top: 1px solid #1f2937; padding: 40px 20px; text-align: center; color: #374151; }
+  footer a { color: #7c3aed; text-decoration: none; }
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, #2d2d4e, transparent); margin: 60px 0; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badges">
+    <span class="badge badge-purple">v1.0.0</span>
+    <span class="badge badge-blue">Commercial License</span>
+    <span class="badge badge-green">Linux + Windows</span>
+    <span class="badge badge-red">AI Powered</span>
+  </div>
+  <h1>🏪 LLMStore</h1>
+  <h2>Enterprise AI Model Deployment Platform</h2>
+  <p>Deploy open-source AI models on your own GPU servers in minutes, not days. 100% private. No cloud required.</p>
+  <div>
+    <a href="#install" class="btn btn-primary">🚀 Get Started</a>
+    <a href="#features" class="btn btn-secondary">✨ Features</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STATS -->
+  <div class="section">
+    <div class="grid-4">
+      <div class="stat-card"><div class="number">18+</div><div class="label">AI Models Ready</div></div>
+      <div class="stat-card"><div class="number">1</div><div class="label">Click to Deploy</div></div>
+      <div class="stat-card"><div class="number">100%</div><div class="label">Private & Secure</div></div>
+      <div class="stat-card"><div class="number">2min</div><div class="label">Setup Time</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHAT IS -->
+  <div class="section" id="about">
+    <div class="section-title">🎯 What is LLMStore?</div>
+    <p class="section-subtitle">Think of it as an App Store for AI Models — running on YOUR infrastructure</p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-icon" style="background:#1a0533">❌</div>
+        <h3>Without LLMStore</h3>
+        <p>Days of complex setup. Data sent to cloud providers. Expensive API bills. Needs AI experts to manage. Security risks with sensitive data.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#0a2a1a">✅</div>
+        <h3>With LLMStore</h3>
+        <p>Deploy in minutes with one click. 100% private on your servers. One-time cost. Anyone can use it. Full data sovereignty guaranteed.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FEATURES -->
+  <div class="section" id="features">
+    <div class="section-title">✨ Features</div>
+    <p class="section-subtitle">Everything you need to run AI on your own infrastructure</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon" style="background:#1e3a5f">🔍</div>
+        <h3>Hardware Detection</h3>
+        <p>Auto-detects CPU, RAM, GPU and Storage. Calculates AI readiness score. Shows compatible models for YOUR specific hardware.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#2d1b69">🏪</div>
+        <h3>Model Catalog</h3>
+        <p>18+ open-source AI models ready to deploy. Smart compatibility scoring. Filter by category, size and hardware requirements.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#1a4731">🚀</div>
+        <h3>One-Click Deploy</h3>
+        <p>Deploy any model with a single click. Live deployment logs in real-time. Auto health check after deployment completes.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#1e3a5f">💬</div>
+        <h3>Chat Interface</h3>
+        <p>Test deployed models directly in browser. Streaming responses with real-time typing. System prompt presets and chat export.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#2d1b69">📊</div>
+        <h3>Real-time Monitoring</h3>
+        <p>Live CPU, RAM and GPU usage graphs. Temperature monitoring. API request tracking with 5-minute history charts.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#1a4731">🔒</div>
+        <h3>100% Private</h3>
+        <p>No data ever leaves your server. No cloud dependency. No usage tracking. Complete data sovereignty for your organization.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MODEL CATALOG -->
+  <div class="section" id="models">
+    <div class="section-title">🤖 Model Catalog</div>
+    <p class="section-subtitle">18+ open-source models across 5 categories</p>
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Models</th>
+        <th>Min RAM</th>
+        <th>Use Cases</th>
+      </tr>
+      <tr>
+        <td><span class="tag tag-purple">LLM</span></td>
+        <td>Llama 3.1 8B/70B, Mistral 7B, Phi-3, Gemma 2, Qwen 2.5</td>
+        <td>8GB+</td>
+        <td>Chat, Analysis, Writing</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">Code</span></td>
+        <td>CodeLlama 7B, DeepSeek Coder 6.7B, StarCoder2 7B</td>
+        <td>8GB+</td>
+        <td>Code Generation, Review</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-green">Vision</span></td>
+        <td>LLaVA 7B, Moondream 2</td>
+        <td>4GB+</td>
+        <td>Image Analysis, OCR</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-purple">Speech</span></td>
+        <td>Whisper Base, Whisper Large V3</td>
+        <td>2GB+</td>
+        <td>Transcription, Translation</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">Embedding</span></td>
+        <td>Nomic Embed Text, MxBai Embed Large</td>
+        <td>2GB+</td>
+        <td>RAG, Semantic Search</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- REQUIREMENTS -->
+  <div class="section">
+    <div class="section-title">📋 Requirements</div>
+    <p class="section-subtitle">LLMStore works on a wide range of hardware</p>
+    <div class="grid-3">
+      <div class="card">
+        <h3>🖥️ Minimum - CPU Only</h3>
+        <br>
+        <table>
+          <tr><td>OS</td><td>Ubuntu 20.04+</td></tr>
+          <tr><td>CPU</td><td>4 cores</td></tr>
+          <tr><td>RAM</td><td>8 GB</td></tr>
+          <tr><td>Storage</td><td>20 GB free</td></tr>
+          <tr><td>GPU</td><td>Not required</td></tr>
+        </table>
+      </div>
+      <div class="card" style="border-color:#7c3aed">
+        <h3>⚡ Recommended - GPU</h3>
+        <br>
+        <table>
+          <tr><td>OS</td><td>Ubuntu 22.04</td></tr>
+          <tr><td>CPU</td><td>16+ cores</td></tr>
+          <tr><td>RAM</td><td>32 GB+</td></tr>
+          <tr><td>Storage</td><td>100 GB+</td></tr>
+          <tr><td>GPU</td><td>NVIDIA 8GB+ VRAM</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>🏢 Enterprise - Large Models</h3>
+        <br>
+        <table>
+          <tr><td>OS</td><td>Ubuntu 22.04</td></tr>
+          <tr><td>CPU</td><td>32+ cores</td></tr>
+          <tr><td>RAM</td><td>64 GB+</td></tr>
+          <tr><td>Storage</td><td>500 GB+</td></tr>
+          <tr><td>GPU</td><td>NVIDIA A100 80GB</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- INSTALL -->
+  <div class="section" id="install">
+    <div class="section-title">🚀 Quick Install</div>
+    <p class="section-subtitle">Get LLMStore running in minutes</p>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="color:white;margin-bottom:16px">🐧 Linux / Ubuntu</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57"></div>
+            <div class="code-dot" style="background:#ffbd2e"></div>
+            <div class="code-dot" style="background:#28c840"></div>
+            <span class="code-label">bash</span>
+          </div>
+          <pre><code><span class="highlight-green">git clone</span> https://github.com/isayushmalvi-gif/llmstore
+<span class="highlight-green">cd</span> llmstore
+<span class="highlight-yellow">sudo bash</span> install.sh</code></pre>
+        </div>
+
+        <h3 style="color:white;margin:24px 0 16px">🐳 Docker</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57"></div>
+            <div class="code-dot" style="background:#ffbd2e"></div>
+            <div class="code-dot" style="background:#28c840"></div>
+            <span class="code-label">bash</span>
+          </div>
+          <pre><code><span class="highlight-green">git clone</span> https://github.com/isayushmalvi-gif/llmstore
+<span class="highlight-green">cd</span> llmstore
+<span class="highlight-yellow">docker-compose up</span> -d</code></pre>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="color:white;margin-bottom:16px">🪟 Windows Server</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57"></div>
+            <div class="code-dot" style="background:#ffbd2e"></div>
+            <div class="code-dot" style="background:#28c840"></div>
+            <span class="code-label">powershell</span>
+          </div>
+          <pre><code><span class="highlight-green">git clone</span> https://github.com/isayushmalvi-gif/llmstore
+<span class="highlight-green">cd</span> llmstore
+<span class="highlight-yellow">.\install.ps1</span></code></pre>
+        </div>
+
+        <h3 style="color:white;margin:24px 0 16px">💻 Development Mode</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57"></div>
+            <div class="code-dot" style="background:#ffbd2e"></div>
+            <div class="code-dot" style="background:#28c840"></div>
+            <span class="code-label">bash</span>
+          </div>
+          <pre><code><span class="highlight-green"># Linux</span>
+bash start-dev.sh
+
+<span class="highlight-green"># Windows</span>
+start-dev.bat</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#0d2818;border:1px solid #16a34a;border-radius:12px;padding:20px;margin-top:24px;text-align:center">
+      <p style="color:#86efac;font-size:1.1rem">After install open <strong>http://YOUR-SERVER-IP</strong> in any browser! 🎉</p>
+      <p style="color:#64748b;font-size:0.85rem;margin-top:4px">No installation needed on employee laptops — just a browser!</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ARCHITECTURE -->
+  <div class="section">
+    <div class="section-title">🏗️ How It Works</div>
+    <p class="section-subtitle">LLMStore runs on your server — employees access from browser</p>
+    <div class="arch-box">
+      <pre>
+<span class="purple">YOUR ORGANIZATION NETWORK</span>
+<span class="blue">═══════════════════════════════════════════════════════</span>
+
+  <span class="yellow">GPU Server</span> (192.168.1.100)
+  <span class="blue">┌─────────────────────────────────────────────────┐</span>
+  <span class="blue">│</span>  <span class="purple">LLMStore</span>                                        <span class="blue">│</span>
+  <span class="blue">│</span>  <span class="green">├── React Frontend     (Port 80)  </span>              <span class="blue">│</span>
+  <span class="blue">│</span>  <span class="green">├── FastAPI Backend    (Port 8000)</span>              <span class="blue">│</span>
+  <span class="blue">│</span>  <span class="green">└── Ollama AI Engine   (Port 11434)</span>             <span class="blue">│</span>
+  <span class="blue">│</span>       <span class="yellow">├── Llama 3.1 8B</span>                            <span class="blue">│</span>
+  <span class="blue">│</span>       <span class="yellow">├── Mistral 7B  </span>                            <span class="blue">│</span>
+  <span class="blue">│</span>       <span class="yellow">└── CodeLlama 7B</span>                            <span class="blue">│</span>
+  <span class="blue">└─────────────────────────────────────────────────┘</span>
+                        <span class="blue">│</span>
+               Company Network
+                        <span class="blue">│</span>
+  <span class="green">┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐</span>
+  <span class="green">│ Employee │  │ Employee │  │ IT Admin │  │Developer │</span>
+  <span class="green">│ Browser  │  │ Browser  │  │ Browser  │  │   API    │</span>
+  <span class="green">└──────────┘  └──────────┘  └──────────┘  └──────────┘</span>
+
+  <span class="purple">No installation needed on employee machines!</span>
+      </pre>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- API -->
+  <div class="section">
+    <div class="section-title">🔌 API Usage</div>
+    <p class="section-subtitle">OpenAI-compatible API — your existing code works without changes</p>
+    <div class="grid-2">
+      <div>
+        <h3 style="color:white;margin-bottom:16px">Python</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57"></div>
+            <div class="code-dot" style="background:#ffbd2e"></div>
+            <div class="code-dot" style="background:#28c840"></div>
+            <span class="code-label">python</span>
+          </div>
+          <pre><code><span class="highlight">from</span> openai <span class="highlight">import</span> OpenAI
+
+client = OpenAI(
+  base_url=<span class="highlight-green">"http://YOUR-SERVER:11434/v1"</span>,
+  api_key=<span class="highlight-green">"your-key"</span>
+)
+
+response = client.chat.completions.create(
+  model=<span class="highlight-green">"llama3.1:8b"</span>,
+  messages=[{
+    <span class="highlight-green">"role"</span>: <span class="highlight-green">"user"</span>,
+    <span class="highlight-green">"content"</span>: <span class="highlight-green">"Hello!"</span>
+  }]
+)
+<span class="highlight">print</span>(response.choices[0].message.content)</code></pre>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:white;margin-bottom:16px">cURL</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57"></div>
+            <div class="code-dot" style="background:#ffbd2e"></div>
+            <div class="code-dot" style="background:#28c840"></div>
+            <span class="code-label">bash</span>
+          </div>
+          <pre><code>curl http://YOUR-SERVER:11434/api/generate \
+  -H <span class="highlight-green">"Content-Type: application/json"</span> \
+  -d <span class="highlight-green">'{
+    "model": "llama3.1:8b",
+    "prompt": "Hello!",
+    "stream": false
+  }'</span></code></pre>
+        </div>
+        <h3 style="color:white;margin:24px 0 16px">JavaScript</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#ff5f57"></div>
+            <div class="code-dot" style="background:#ffbd2e"></div>
+            <div class="code-dot" style="background:#28c840"></div>
+            <span class="code-label">javascript</span>
+          </div>
+          <pre><code><span class="highlight">const</span> response = <span class="highlight">await</span> fetch(
+  <span class="highlight-green">"http://YOUR-SERVER:11434/api/generate"</span>,
+  {
+    method: <span class="highlight-green">"POST"</span>,
+    body: JSON.stringify({
+      model: <span class="highlight-green">"llama3.1:8b"</span>,
+      prompt: <span class="highlight-green">"Hello!"</span>
+    })
+  }
+)
+<span class="highlight">const</span> data = <span class="highlight">await</span> response.json()
+console.log(data.response)</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <div class="section-title">🛠️ Tech Stack</div>
+    <p class="section-subtitle">Built with modern, production-grade technologies</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:16px">Backend</h3>
+        <table>
+          <tr><th>Technology</th><th>Purpose</th></tr>
+          <tr><td>Python 3.11</td><td>Core language</td></tr>
+          <tr><td>FastAPI</td><td>REST API framework</td></tr>
+          <tr><td>Uvicorn</td><td>ASGI server</td></tr>
+          <tr><td>Ollama</td><td>AI model engine</td></tr>
+          <tr><td>psutil</td><td>Hardware monitoring</td></tr>
+          <tr><td>pynvml</td><td>NVIDIA GPU stats</td></tr>
+          <tr><td>httpx</td><td>Async HTTP client</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:16px">Frontend</h3>
+        <table>
+          <tr><th>Technology</th><th>Purpose</th></tr>
+          <tr><td>React 18</td><td>UI framework</td></tr>
+          <tr><td>TypeScript</td><td>Type safety</td></tr>
+          <tr><td>Tailwind CSS</td><td>Styling</td></tr>
+          <tr><td>Vite</td><td>Build tool</td></tr>
+          <tr><td>Recharts</td><td>Charts and graphs</td></tr>
+          <tr><td>Lucide React</td><td>Icons</td></tr>
+          <tr><td>Axios</td><td>API calls</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRICING -->
+  <div class="section">
+    <div class="section-title">💰 Pricing</div>
+    <p class="section-subtitle">Simple, transparent pricing for every organization</p>
+    <div class="grid-4">
+      <div class="pricing-card">
+        <div class="plan">Community</div>
+        <div class="price">Free</div>
+        <ul>
+          <li>1 server</li>
+          <li>3 models max</li>
+          <li>Basic UI</li>
+          <li>Community support</li>
+        </ul>
+      </div>
+      <div class="pricing-card featured">
+        <div class="plan">Professional</div>
+        <div class="price">$299<span>/mo</span></div>
+        <ul>
+          <li>3 servers</li>
+          <li>Unlimited models</li>
+          <li>API gateway</li>
+          <li>Email support</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="plan">Enterprise</div>
+        <div class="price">$999<span>/mo</span></div>
+        <ul>
+          <li>Unlimited servers</li>
+          <li>SSO integration</li>
+          <li>Audit logs</li>
+          <li>SLA + support</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="plan">Custom</div>
+        <div class="price" style="font-size:1.5rem">Contact Us</div>
+        <ul>
+          <li>Air-gapped deploy</li>
+          <li>Custom integrations</li>
+          <li>On-site support</li>
+          <li>Custom SLA</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ROADMAP -->
+  <div class="section">
+    <div class="section-title">🗺️ Roadmap</div>
+    <p class="section-subtitle">What we have built and what is coming next</p>
+    <div class="grid-3">
+      <div class="card">
+        <h3 style="color:#86efac;margin-bottom:20px">v1.0.0 ✅ Current</h3>
+        <div class="roadmap-item"><div class="roadmap-dot dot-done"></div><div class="roadmap-text done">Hardware detection</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-done"></div><div class="roadmap-text done">Model catalog 18+ models</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-done"></div><div class="roadmap-text done">One-click deployment</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-done"></div><div class="roadmap-text done">Chat interface</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-done"></div><div class="roadmap-text done">Real-time monitoring</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-done"></div><div class="roadmap-text done">Linux and Windows install</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-done"></div><div class="roadmap-text done">Docker support</div></div>
+      </div>
+      <div class="card">
+        <h3 style="color:#fcd34d;margin-bottom:20px">v1.1.0 🔲 Coming Soon</h3>
+        <div class="roadmap-item"><div class="roadmap-dot dot-soon"></div><div class="roadmap-text">User authentication</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-soon"></div><div class="roadmap-text">Multi-server management</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-soon"></div><div class="roadmap-text">Fine-tuning interface</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-soon"></div><div class="roadmap-text">API gateway</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-soon"></div><div class="roadmap-text">Usage analytics</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-soon"></div><div class="roadmap-text">LDAP integration</div></div>
+      </div>
+      <div class="card">
+        <h3 style="color:#94a3b8;margin-bottom:20px">v2.0.0 🔲 Future</h3>
+        <div class="roadmap-item"><div class="roadmap-dot dot-future"></div><div class="roadmap-text">Kubernetes support</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-future"></div><div class="roadmap-text">Model marketplace</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-future"></div><div class="roadmap-text">Auto-scaling</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-future"></div><div class="roadmap-text">Cost tracking</div></div>
+        <div class="roadmap-item"><div class="roadmap-dot dot-future"></div><div class="roadmap-text">Mobile app</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- USE CASES -->
+  <div class="section">
+    <div class="section-title">🏢 Use Cases</div>
+    <p class="section-subtitle">Who uses LLMStore and why</p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-icon" style="background:#1e3a5f">🏦</div>
+        <h3>Banking and Finance</h3>
+        <p>Cannot send customer financial data to external AI providers. LLMStore runs powerful AI models completely on their own secure infrastructure with full regulatory compliance.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#1a4731">🏥</div>
+        <h3>Healthcare</h3>
+        <p>Patient data must stay on-premise for HIPAA compliance. LLMStore provides cutting-edge AI capabilities while ensuring all data remains within the hospital network.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#2d1b69">🏛️</div>
+        <h3>Government</h3>
+        <p>Data sovereignty requirements mean government agencies cannot use cloud AI. LLMStore works perfectly in air-gapped environments with zero internet dependency.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#1e3a5f">🏢</div>
+        <h3>Large Enterprise</h3>
+        <p>Companies spending large amounts on cloud AI API calls can reduce costs by 90% by running open-source models on their own GPU servers with LLMStore.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROJECT STRUCTURE -->
+  <div class="section">
+    <div class="section-title">📁 Project Structure</div>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#ff5f57"></div>
+        <div class="code-dot" style="background:#ffbd2e"></div>
+        <div class="code-dot" style="background:#28c840"></div>
+        <span class="code-label">llmstore/</span>
+      </div>
+      <pre><code><span class="highlight">llmstore/</span>
+<span class="highlight-blue">├── backend/</span>
+<span class="highlight-blue">│   ├── app/</span>
+<span class="highlight-blue">│   │   ├── api/routes/</span>
+<span class="highlight-green">│   │   │   ├── hardware.py      </span>Hardware detection API
+<span class="highlight-green">│   │   │   ├── models.py        </span>Model catalog API
+<span class="highlight-green">│   │   │   ├── deployments.py   </span>Deployment engine
+<span class="highlight-green">│   │   │   ├── chat.py          </span>Chat proxy API
+<span class="highlight-green">│   │   │   └── monitoring.py    </span>Metrics API
+<span class="highlight-blue">│   │   ├── services/</span>
+<span class="highlight-green">│   │   │   ├── hardware_scanner.py</span>
+<span class="highlight-green">│   │   │   ├── deployment_service.py</span>
+<span class="highlight-green">│   │   │   └── monitoring_service.py</span>
+<span class="highlight-blue">│   └── models_catalog/</span>
+<span class="highlight-green">│       └── models.json          </span>18+ models database
+<span class="highlight-blue">├── frontend/</span>
+<span class="highlight-blue">│   └── src/</span>
+<span class="highlight-green">│       ├── pages/               </span>6 pages
+<span class="highlight-green">│       ├── components/          </span>15+ components
+<span class="highlight-green">│       ├── services/            </span>API layer
+<span class="highlight-green">│       └── types/               </span>TypeScript types
+<span class="highlight-yellow">├── install.sh                   </span>Linux installer
+<span class="highlight-yellow">├── install.ps1                  </span>Windows installer
+<span class="highlight-yellow">├── start-dev.sh                 </span>Linux dev mode
+<span class="highlight-yellow">├── start-dev.bat                </span>Windows dev mode
+<span class="highlight-yellow">└── docker-compose.yml           </span>Docker setup</code></pre>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p style="font-size:1.5rem;margin-bottom:8px">🏪 LLMStore</p>
+  <p style="color:#4b5563;margin-bottom:16px">Enterprise AI Model Deployment Platform</p>
+  <p>Built with ❤️ by <a href="https://github.com/isayushmalvi-gif">Ayush Malviya</a></p>
+  <br>
+  <p style="color:#374151">⭐ Star this repo if you find it useful!</p>
+</footer>
+
+</body>
+</html>
