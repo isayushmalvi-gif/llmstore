@@ -7,7 +7,7 @@ import { useModels } from '../hooks/useModels'
 import type { Model } from '../types/models'
 import {
   Search, Filter, Cpu, Zap,
-  HardDrive, Star, SlidersHorizontal
+  HardDrive, SlidersHorizontal
 } from 'lucide-react'
 
 const CATEGORIES = ["All", "LLM", "Code", "Vision", "Speech", "Embedding"]

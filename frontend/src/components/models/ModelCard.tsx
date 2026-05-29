@@ -3,7 +3,7 @@ import type { Model } from '../../types/models'
 import { CompatibilityBadge } from './CompatibilityBadge'
 import {
   HardDrive, Cpu, Zap, ChevronDown,
-  ChevronUp, Star, Download, ExternalLink
+  ChevronUp, Star, Download
 } from 'lucide-react'
 
 interface Props {

@@ -248,11 +248,108 @@ VITE_OLLAMA_URL=
 ENVEOF
 
 # Build frontend
+
+# Fix TypeScript errors automatically
+log_info "Fixing TypeScript compatibility..."
+python3 << PYFIX
+import os, re
+
+# Fix Settings.tsx
+path = "src/pages/Settings.tsx"
+if os.path.exists(path):
+    with open(path) as f: c = f.read()
+    c = re.sub(
+        r"import \{[^}]+\} from \"lucide-react\"",
+        """import {
+  Save, RefreshCw, Server,
+  Key, Bell, CheckCircle,
+  ExternalLink, Globe, Database
+} from \"lucide-react\"""",
+        c, count=1
+    )
+    with open(path, "w") as f: f.write(c)
+    print("Fixed Settings.tsx")
+
+# Fix Monitoring.tsx
+path = "src/pages/Monitoring.tsx"
+if os.path.exists(path):
+    with open(path) as f: c = f.read()
+    c = re.sub(r"const MiniChart = \(\{.*?\}\)", "", c, flags=re.DOTALL)
+    c = c.replace("formatter={(v: number) => [v + unit, label]}", "formatter={(v) => [String(v) + unit, label]}")
+    c = c.replace("formatter={(v: number) => [v + \"%\", label]}", "formatter={(v) => [String(v) + \"%\", label]}")
+    c = c.replace('labelFormatter={(l: string) => "Time: " + l}', 'labelFormatter={(l) => "Time: " + String(l)}')
+    c = c.replace('labelFormatter={(l) => "Time: " + l}', 'labelFormatter={(l) => "Time: " + String(l)}')
+    with open(path, "w") as f: f.write(c)
+    print("Fixed Monitoring.tsx")
+
+# Fix ModelCard.tsx
+path = "src/components/models/ModelCard.tsx"
+if os.path.exists(path):
+    with open(path) as f: c = f.read()
+    c = c.replace(
+        "HardDrive, Cpu, Zap, ChevronDown,\n  ChevronUp, Star, Download, ExternalLink",
+        "HardDrive, Cpu, Zap, ChevronDown,\n  ChevronUp, Star, Download"
+    )
+    with open(path, "w") as f: f.write(c)
+    print("Fixed ModelCard.tsx")
+
+# Fix ModelCatalog.tsx
+path = "src/pages/ModelCatalog.tsx"
+if os.path.exists(path):
+    with open(path) as f: c = f.read()
+    c = c.replace(
+        "Search, Filter, Cpu, Zap,\n  HardDrive, Star, SlidersHorizontal",
+        "Search, Filter, Cpu, Zap,\n  HardDrive, SlidersHorizontal"
+    )
+    with open(path, "w") as f: f.write(c)
+    print("Fixed ModelCatalog.tsx")
+
+# Fix API URLs to be relative
+for filepath in [
+    "src/services/api.ts",
+    "src/services/chatApi.ts",
+    "src/pages/Monitoring.tsx",
+    "src/pages/Settings.tsx",
+]:
+    if os.path.exists(filepath):
+        with open(filepath) as f: c = f.read()
+        c = c.replace("|| \'http://localhost:8000\'", "|| \'\'")
+        c = c.replace('\'|| "http://localhost:8000"', '\'|| ""')
+        with open(filepath, "w") as f: f.write(c)
+
+# Clear .env
+with open(".env", "w") as f:
+    f.write("VITE_API_URL=\nVITE_OLLAMA_URL=\n")
+
+print("All TypeScript fixes applied!")
+PYFIX
+
 log_info "Building frontend..."
 npm run build 2>/dev/null
 
 if [ -d "dist/assets" ]; then
     log_success "Frontend built successfully!"
+
+# Fix hardcoded URLs in built JS
+log_info "Fixing API URLs for production..."
+python3 << URLFIX
+import os, re
+dist = "$INSTALL_DIR/frontend/dist/assets"
+if os.path.exists(dist):
+    for f in os.listdir(dist):
+        if f.endswith(".js"):
+            path = os.path.join(dist, f)
+            with open(path, "r", errors="ignore") as fh:
+                js = fh.read()
+            js = re.sub(r"https?://[a-zA-Z0-9\-\.]+\.app\.github\.dev", "", js)
+            js = js.replace("http://localhost:8000", "")
+            js = js.replace("http://localhost:11434", "")
+            with open(path, "w") as fh:
+                fh.write(js)
+    print("API URLs fixed!")
+URLFIX
+log_success "API URLs configured for production!"
+
 
 # Fix API URLs to use relative paths
 log_info "Configuring frontend API URLs..."

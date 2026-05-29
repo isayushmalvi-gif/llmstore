@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react"
 import { TopBar } from "../components/layout/TopBar"
 import {
-  Settings as SettingsIcon, Save, RefreshCw,
-  Server, Key, Bell, Shield,
-  CheckCircle, XCircle, ExternalLink,
-  Cpu, Globe, Database
+  Save, RefreshCw, Server,
+  Key, Bell, CheckCircle,
+  ExternalLink, Globe, Database
 } from "lucide-react"
 import axios from "axios"
 
