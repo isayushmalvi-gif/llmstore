@@ -153,18 +153,39 @@ if [ -d "$INSTALL_DIR" ]; then
     git pull origin main 2>/dev/null || true
 else
     log_info "Cloning LLMStore..."
-    git clone $REPO_URL $INSTALL_DIR 2>/dev/null
+    git clone $REPO_URL $INSTALL_DIR
+    if [ ! -d "$INSTALL_DIR" ]; then
+        log_error "Failed to clone LLMStore!"
+    fi
 fi
 
 cd $INSTALL_DIR
 
 # Python virtual environment
-log_info "Setting up Python environment..."
+log_info "Creating Python virtual environment..."
 python3 -m venv $INSTALL_DIR/venv
-$INSTALL_DIR/venv/bin/pip install -q --upgrade pip 2>/dev/null
-$INSTALL_DIR/venv/bin/pip install -q -r backend/requirements.txt 2>/dev/null
+if [ ! -f "$INSTALL_DIR/venv/bin/pip" ]; then
+    log_error "Failed to create virtual environment!"
+fi
+log_success "Virtual environment created!"
 
-log_success "Python environment ready!"
+log_info "Upgrading pip..."
+$INSTALL_DIR/venv/bin/pip install --upgrade pip --quiet
+
+log_info "Installing Python packages..."
+$INSTALL_DIR/venv/bin/pip install     "fastapi==0.109.0"     "uvicorn==0.27.0"     "psutil==5.9.8"     "gputil==1.4.0"     "py-cpuinfo==9.0.0"     "pynvml==11.5.0"     "pydantic==2.5.3"     "pydantic-settings==2.1.0"     "requests==2.31.0"     "websockets==12.0"     "python-multipart==0.0.6"     "aiofiles==23.2.1"     "httpx==0.26.0"
+
+if [ $? -ne 0 ]; then
+    log_warning "Some packages failed, trying without versions..."
+    $INSTALL_DIR/venv/bin/pip install         fastapi uvicorn psutil gputil         py-cpuinfo pynvml pydantic         pydantic-settings requests         websockets python-multipart         aiofiles httpx
+fi
+
+# Verify uvicorn installed
+if [ -f "$INSTALL_DIR/venv/bin/uvicorn" ]; then
+    log_success "Python environment ready!"
+else
+    log_error "uvicorn not found! pip install failed!"
+fi
 
 # ============================================
 # STEP 6: BUILD FRONTEND
