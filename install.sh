@@ -520,10 +520,12 @@ After=network.target
 Type=simple
 ExecStart=/usr/local/bin/ollama serve
 Restart=always
-RestartSec=5
+RestartSec=10
 Environment=OLLAMA_HOST=0.0.0.0
-StandardOutput=null
-StandardError=null
+Environment=HOME=/root
+Environment=OLLAMA_ORIGINS=*
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
