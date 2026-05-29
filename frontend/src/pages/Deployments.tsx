@@ -12,6 +12,8 @@ import {
   Rocket, Plus, Search, X,
   CheckCircle, XCircle, Zap
 } from 'lucide-react'
+import { RunningModels } from '../components/models/RunningModels'
+import { InstalledModels } from '../components/models/InstalledModels'
 
 export const Deployments = () => {
   const [data, setData] = useState<DeploymentsResponse | null>(null)
@@ -213,6 +215,12 @@ export const Deployments = () => {
           )
         )}
       </div>
+
+      {/* Running Models */}
+      <RunningModels />
+
+      {/* Installed Models */}
+      <InstalledModels />
 
       {showDeployModal && (
         <div

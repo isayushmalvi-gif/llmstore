@@ -18,7 +18,12 @@ const SYSTEM_PROMPTS = [
 export const Chat = () => {
   const [models, setModels]               = useState<string[]>([])
   const [selectedModel, setSelectedModel] = useState<string>("")
-  const [messages, setMessages]           = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>(() => {
+    try {
+      const saved = localStorage.getItem('llmstore-chat')
+      return saved ? JSON.parse(saved) : []
+    } catch { return [] }
+  })
   const [input, setInput]                 = useState("")
   const [loading, setLoading]             = useState(false)
   const [systemPrompt, setSystemPrompt]   = useState(SYSTEM_PROMPTS[0].value)
@@ -30,6 +35,15 @@ export const Chat = () => {
   }, [])
 
   useEffect(() => { scrollToBottom() }, [messages, scrollToBottom])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        'llmstore-chat',
+        JSON.stringify(messages.slice(-100))
+      )
+    } catch {}
+  }, [messages])
 
   useEffect(() => {
     const load = async () => {
@@ -220,7 +234,10 @@ export const Chat = () => {
           )}
 
           <div className="flex gap-2 mt-auto">
-            <button onClick={() => setMessages([])}
+            <button onClick={() => {
+              setMessages([])
+              localStorage.removeItem('llmstore-chat')
+            }}
               disabled={messages.length === 0}
               className="flex-1 flex items-center justify-center gap-1.5 bg-gray-800 hover:bg-gray-700 text-gray-400 text-xs font-medium py-2 rounded-lg transition-all disabled:opacity-50">
               <Trash2 size={13} /> Clear

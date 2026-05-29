@@ -1,4 +1,5 @@
 import subprocess
+import os
 import threading
 import uuid
 import requests
@@ -39,35 +40,95 @@ class DeploymentService:
         if self._check_ollama():
             self._add_log(deployment_id, "✅ Ollama is already running")
             return True
-        self._add_log(deployment_id, "Starting Ollama service...")
+
+        self._add_log(deployment_id, "⚙️ Starting Ollama service...")
+
         try:
-            subprocess.Popen(
-                ["ollama", "serve"],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL
+            # Try multiple ways to start ollama
+            ollama_paths = [
+                "ollama",
+                "/usr/local/bin/ollama",
+                "/usr/bin/ollama",
+                os.path.expanduser("~/.ollama/ollama")
+            ]
+
+            started = False
+            for ollama_path in ollama_paths:
+                try:
+                    subprocess.Popen(
+                        [ollama_path, "serve"],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        start_new_session=True
+                    )
+                    self._add_log(
+                        deployment_id,
+                        f"✅ Started Ollama from: {ollama_path}"
+                    )
+                    started = True
+                    break
+                except FileNotFoundError:
+                    continue
+
+            if not started:
+                self._add_log(
+                    deployment_id,
+                    "❌ Ollama not found! Installing..."
+                )
+                install = subprocess.run(
+                    "curl -fsSL https://ollama.ai/install.sh | sh",
+                    shell=True,
+                    capture_output=True,
+                    text=True
+                )
+                if install.returncode == 0:
+                    self._add_log(
+                        deployment_id,
+                        "✅ Ollama installed!"
+                    )
+                    subprocess.Popen(
+                        ["ollama", "serve"],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        start_new_session=True
+                    )
+                else:
+                    self._add_log(
+                        deployment_id,
+                        "❌ Ollama install failed!"
+                    )
+                    return False
+
+            # Wait for Ollama to be ready
+            self._add_log(
+                deployment_id,
+                "⏳ Waiting for Ollama to be ready..."
             )
-            for i in range(15):
+            for i in range(20):
                 time.sleep(2)
                 if self._check_ollama():
-                    self._add_log(deployment_id, "✅ Ollama service started")
+                    self._add_log(
+                        deployment_id,
+                        "✅ Ollama is ready!"
+                    )
                     return True
-                self._add_log(deployment_id, f"Waiting for Ollama... ({i+1}/15)")
-            return False
-        except FileNotFoundError:
-            self._add_log(deployment_id, "❌ Ollama not installed")
-            self._add_log(deployment_id, "Installing Ollama...")
-            try:
-                subprocess.run(
-                    "curl -fsSL https://ollama.ai/install.sh | sh",
-                    shell=True, check=True
+                self._add_log(
+                    deployment_id,
+                    f"⏳ Waiting... ({i+1}/20)"
                 )
-                subprocess.Popen(["ollama", "serve"],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL)
-                time.sleep(5)
-                return self._check_ollama()
-            except:
-                return False
+
+            self._add_log(
+                deployment_id,
+                "❌ Ollama failed to start!"
+            )
+            return False
+
+        except Exception as e:
+            self._add_log(
+                deployment_id,
+                f"❌ Error starting Ollama: {str(e)}"
+            )
+            return False
 
     def _pull_model(self, deployment_id: str, ollama_id: str) -> bool:
         self._add_log(deployment_id, f"📥 Pulling model: {ollama_id}")
