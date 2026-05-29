@@ -160,10 +160,9 @@ cd $INSTALL_DIR
 
 # Python virtual environment
 log_info "Setting up Python environment..."
-python3 -m venv venv
-source venv/bin/activate
-pip install -q --upgrade pip 2>/dev/null
-pip install -q -r backend/requirements.txt 2>/dev/null
+python3 -m venv $INSTALL_DIR/venv
+$INSTALL_DIR/venv/bin/pip install -q --upgrade pip 2>/dev/null
+$INSTALL_DIR/venv/bin/pip install -q -r backend/requirements.txt 2>/dev/null
 
 log_success "Python environment ready!"
 
