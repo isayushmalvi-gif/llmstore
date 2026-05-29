@@ -6,7 +6,7 @@
 # Usage: curl -fsSL https://raw.githubusercontent.com/isayushmalvi-gif/llmstore/main/install.sh | sudo bash
 # ============================================
 
-set -e
+set +e
 
 # Colors
 RED="\033[0;31m"
