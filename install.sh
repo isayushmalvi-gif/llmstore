@@ -577,7 +577,8 @@ while [ $COUNT -lt $MAX ]; do
 done
 
 # Get server IP
-SERVER_IP=$(hostname -I | awk "{print \$1}")
+# Try to get public IP first
+SERVER_IP=$(curl -s ifconfig.me 2>/dev/null ||             curl -s icanhazip.com 2>/dev/null ||             curl -s api.ipify.org 2>/dev/null ||             hostname -I | awk "{print \$1}")
 
 echo ""
 if curl -s http://localhost:$BACKEND_PORT/health > /dev/null 2>&1; then
