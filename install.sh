@@ -253,6 +253,33 @@ npm run build 2>/dev/null
 
 if [ -d "dist/assets" ]; then
     log_success "Frontend built successfully!"
+
+# Fix API URLs to use relative paths
+log_info "Configuring frontend API URLs..."
+python3 << PYFIX
+import os, re
+
+dist_path = "$INSTALL_DIR/frontend/dist/assets"
+if os.path.exists(dist_path):
+    for f in os.listdir(dist_path):
+        if f.endswith(".js"):
+            path = os.path.join(dist_path, f)
+            with open(path, "r", encoding="utf-8", errors="ignore") as fh:
+                js = fh.read()
+            # Replace any hardcoded URLs
+            js = re.sub(
+                r"https?://[a-zA-Z0-9\-\.]+\.app\.github\.dev",
+                "",
+                js
+            )
+            js = js.replace("http://localhost:8000", "")
+            js = js.replace("http://localhost:11434", "")
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write(js)
+    print("API URLs configured!")
+PYFIX
+log_success "Frontend API URLs configured!"
+
 else
     log_error "Frontend build failed! Check logs: $LOG_FILE"
 fi
