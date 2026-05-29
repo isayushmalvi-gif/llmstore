@@ -134,12 +134,17 @@ class DeploymentService:
         self._add_log(deployment_id, f"📥 Pulling model: {ollama_id}")
         self._update_status(deployment_id, DeploymentStatus.DOWNLOADING)
         try:
+            import os
+            env = os.environ.copy()
+            env["HOME"] = "/root"
+            env["OLLAMA_HOST"] = "http://localhost:11434"
             process = subprocess.Popen(
                 ["ollama", "pull", ollama_id],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
-                bufsize=1
+                bufsize=1,
+                env=env
             )
             for line in iter(process.stdout.readline, ""):
                 line = line.strip()
